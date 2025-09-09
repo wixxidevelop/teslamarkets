@@ -18,6 +18,7 @@ export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('dashboard')
   const [showUploadForm, setShowUploadForm] = useState(false)
   const [editingProduct, setEditingProduct] = useState(null)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [stats, setStats] = useState({
     totalProducts: 0,
     totalCars: 0,
@@ -93,14 +94,14 @@ export default function AdminDashboard() {
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`bg-gray-900 rounded-xl p-6 border border-gray-800 hover:border-${color}-500/50 transition-all duration-300`}
+      className={`bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800 hover:border-${color}-500/50 transition-all duration-300`}
     >
       <div className="flex items-center justify-between">
-        <div>
-          <p className="text-gray-400 text-sm font-medium">{title}</p>
-          <p className="text-2xl font-bold text-white mt-1">{value}</p>
+        <div className="min-w-0 flex-1">
+          <p className="text-gray-400 text-xs sm:text-sm font-medium truncate">{title}</p>
+          <p className="text-lg sm:text-2xl font-bold text-white mt-1 truncate">{value}</p>
         </div>
-        <div className={`p-3 bg-${color}-500/20 rounded-lg`}>
+        <div className={`p-2 sm:p-3 bg-${color}-500/20 rounded-lg flex-shrink-0 ml-2`}>
           {icon}
         </div>
       </div>
@@ -119,23 +120,32 @@ export default function AdminDashboard() {
       <motion.header 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gray-900 border-b border-gray-800 px-6 py-4"
+        className="bg-gray-900 border-b border-gray-800 px-4 sm:px-6 py-4"
       >
         <div className="flex items-center justify-between max-w-7xl mx-auto">
-          <div className="flex items-center space-x-4">
-            <h1 className="text-2xl font-bold">TESLA</h1>
-            <span className="text-gray-400">Admin Panel</span>
+          <div className="flex items-center space-x-2 sm:space-x-4">
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden p-2 rounded-lg hover:bg-gray-800 transition-colors duration-300"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+              </svg>
+            </button>
+            <h1 className="text-xl sm:text-2xl font-bold">TESLA</h1>
+            <span className="hidden sm:block text-gray-400">Admin Panel</span>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 sm:space-x-4">
             <button
               onClick={() => router.push('/shop')}
-              className="text-gray-400 hover:text-white transition-colors duration-300"
+              className="hidden sm:block text-gray-400 hover:text-white transition-colors duration-300"
             >
               View Shop
             </button>
             <button
               onClick={handleLogout}
-              className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg transition-colors duration-300"
+              className="bg-red-600 hover:bg-red-700 px-3 sm:px-4 py-2 rounded-lg transition-colors duration-300 text-sm sm:text-base"
             >
               Logout
             </button>
@@ -143,13 +153,42 @@ export default function AdminDashboard() {
         </div>
       </motion.header>
 
-      <div className="flex">
+      <div className="flex relative">
+        {/* Mobile Sidebar Overlay */}
+        {isMobileMenuOpen && (
+          <div 
+            className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+        )}
+        
         {/* Sidebar */}
         <motion.aside 
           initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="w-64 bg-gray-900 border-r border-gray-800 min-h-screen p-6"
+          animate={{ 
+            opacity: 1, 
+            x: 0,
+            transform: isMobileMenuOpen ? 'translateX(0)' : 'translateX(-100%)'
+          }}
+          className={`
+            fixed lg:relative lg:translate-x-0 z-50 lg:z-auto
+            w-64 bg-gray-900 border-r border-gray-800 min-h-screen p-4 sm:p-6
+            transition-transform duration-300 ease-in-out
+            ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+          `}
         >
+          {/* Mobile Close Button */}
+          <div className="lg:hidden flex justify-end mb-4">
+            <button
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="p-2 rounded-lg hover:bg-gray-800 transition-colors duration-300"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          
           <nav className="space-y-2">
             {[
               { id: 'dashboard', label: 'Dashboard', icon: '📊' },
@@ -158,7 +197,10 @@ export default function AdminDashboard() {
             ].map((item) => (
               <button
                 key={item.id}
-                onClick={() => setActiveTab(item.id)}
+                onClick={() => {
+                  setActiveTab(item.id)
+                  setIsMobileMenuOpen(false)
+                }}
                 className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 ${
                   activeTab === item.id
                     ? 'bg-white text-black'
@@ -170,10 +212,24 @@ export default function AdminDashboard() {
               </button>
             ))}
           </nav>
+          
+          {/* Mobile View Shop Button */}
+          <div className="lg:hidden mt-6 pt-6 border-t border-gray-800">
+            <button
+              onClick={() => {
+                router.push('/shop')
+                setIsMobileMenuOpen(false)
+              }}
+              className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-all duration-300"
+            >
+              <span>🛍️</span>
+              <span>View Shop</span>
+            </button>
+          </div>
         </motion.aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-6">
+        <main className="flex-1 lg:ml-0 p-4 sm:p-6 w-full lg:w-auto">
           {activeTab === 'dashboard' && (
             <motion.div 
               initial={{ opacity: 0 }}
@@ -181,12 +237,12 @@ export default function AdminDashboard() {
               className="space-y-6"
             >
               <div>
-                <h2 className="text-3xl font-bold mb-2">Dashboard</h2>
-                <p className="text-gray-400">Overview of your Tesla shop</p>
+                <h2 className="text-2xl sm:text-3xl font-bold mb-2">Dashboard</h2>
+                <p className="text-gray-400 text-sm sm:text-base">Overview of your Tesla shop</p>
               </div>
 
               {/* Stats Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                 <StatCard 
                   title="Total Products"
                   value={stats.totalProducts}
@@ -214,29 +270,29 @@ export default function AdminDashboard() {
               </div>
 
               {/* Quick Actions */}
-              <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
-                <h3 className="text-xl font-bold mb-4">Quick Actions</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800">
+                <h3 className="text-lg sm:text-xl font-bold mb-4">Quick Actions</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                   <button
                     onClick={() => setActiveTab('products')}
-                    className="p-4 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors duration-300 text-left"
+                    className="p-3 sm:p-4 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors duration-300 text-left"
                   >
-                    <h4 className="text-white font-semibold">Manage Products</h4>
-                    <p className="text-gray-400 text-sm mt-1">View and edit existing products</p>
+                    <h4 className="text-white font-semibold text-sm sm:text-base">Manage Products</h4>
+                    <p className="text-gray-400 text-xs sm:text-sm mt-1">View and edit existing products</p>
                   </button>
                   <button
                     onClick={() => {
                       setActiveTab('products')
                       setShowUploadForm(true)
                     }}
-                    className="p-4 bg-white hover:bg-gray-200 text-black rounded-lg transition-colors duration-300 text-left"
+                    className="p-3 sm:p-4 bg-white hover:bg-gray-200 text-black rounded-lg transition-colors duration-300 text-left"
                   >
-                    <h4 className="font-semibold">Add New Product</h4>
-                    <p className="text-gray-600 text-sm mt-1">Upload a new vehicle or home</p>
+                    <h4 className="font-semibold text-sm sm:text-base">Add New Product</h4>
+                    <p className="text-gray-600 text-xs sm:text-sm mt-1">Upload a new vehicle or home</p>
                   </button>
-                  <Link href="/shop" className="p-4 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors duration-300 text-left block">
-                    <h4 className="text-white font-semibold">View Shop</h4>
-                    <p className="text-gray-400 text-sm mt-1">See the public shop page</p>
+                  <Link href="/shop" className="p-3 sm:p-4 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors duration-300 text-left block sm:col-span-2 lg:col-span-1">
+                    <h4 className="text-white font-semibold text-sm sm:text-base">View Shop</h4>
+                    <p className="text-gray-400 text-xs sm:text-sm mt-1">See the public shop page</p>
                   </Link>
                 </div>
               </div>
@@ -251,11 +307,11 @@ export default function AdminDashboard() {
             >
               {showUploadForm ? (
                 <div>
-                  <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-3xl font-bold mb-2">Add New Product</h2>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-3">
+                    <h2 className="text-2xl sm:text-3xl font-bold">Add New Product</h2>
                     <button
                       onClick={() => setShowUploadForm(false)}
-                      className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors duration-300"
+                      className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors duration-300 text-sm sm:text-base self-start sm:self-auto"
                     >
                       Back to Products
                     </button>
@@ -300,22 +356,22 @@ export default function AdminDashboard() {
                 </div>
               ) : (
                 <div>
-                  <div className="flex items-center justify-between mb-6">
+                  <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-6 gap-4">
                     <div>
-                      <h2 className="text-3xl font-bold mb-2">Products</h2>
-                      <p className="text-gray-400">Manage your product catalog</p>
+                      <h2 className="text-2xl sm:text-3xl font-bold mb-2">Products</h2>
+                      <p className="text-gray-400 text-sm sm:text-base">Manage your product catalog</p>
                     </div>
                     <button
                       onClick={() => setShowUploadForm(true)}
-                      className="px-4 py-2 bg-white text-black rounded-lg hover:bg-gray-200 transition-colors duration-300 font-semibold"
+                      className="px-4 py-2 bg-white text-black rounded-lg hover:bg-gray-200 transition-colors duration-300 font-semibold text-sm sm:text-base self-start sm:self-auto whitespace-nowrap"
                     >
                       Add New Product
                     </button>
                   </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                     {products.map((product) => (
-                      <div key={product.id} className="bg-gray-900 rounded-lg p-4 border border-gray-800">
+                      <div key={product.id} className="bg-gray-900 rounded-lg p-3 sm:p-4 border border-gray-800">
                         <div className="aspect-video bg-gray-800 rounded-lg mb-3 overflow-hidden">
                           <img
                             src={product.image}
@@ -323,13 +379,13 @@ export default function AdminDashboard() {
                             className="w-full h-full object-cover"
                           />
                         </div>
-                        <h4 className="text-white font-semibold mb-2">{product.title}</h4>
-                        <p className="text-gray-400 text-sm mb-2">{product.type === 'car' ? 'Vehicle' : 'Home'}</p>
-                        <p className="text-white font-bold mb-3">${product.price?.toLocaleString()}</p>
-                        <div className="flex space-x-2">
+                        <h4 className="text-white font-semibold mb-2 text-sm sm:text-base truncate">{product.title}</h4>
+                        <p className="text-gray-400 text-xs sm:text-sm mb-2">{product.type === 'car' ? 'Vehicle' : 'Home'}</p>
+                        <p className="text-white font-bold mb-3 text-sm sm:text-base">${product.price?.toLocaleString()}</p>
+                        <div className="flex flex-col sm:flex-row gap-2 sm:space-x-2 sm:gap-0">
                           <button 
                             onClick={() => setEditingProduct(product)}
-                            className="flex-1 px-3 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded text-sm transition-colors duration-300"
+                            className="flex-1 px-3 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded text-xs sm:text-sm transition-colors duration-300"
                           >
                             Edit
                           </button>
@@ -339,7 +395,7 @@ export default function AdminDashboard() {
                                 deleteProduct(product.id)
                               }
                             }}
-                            className="flex-1 px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded text-sm transition-colors duration-300"
+                            className="flex-1 px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded text-xs sm:text-sm transition-colors duration-300"
                           >
                             Delete
                           </button>
@@ -349,11 +405,11 @@ export default function AdminDashboard() {
                   </div>
                   
                   {products.length === 0 && (
-                    <div className="text-center py-20">
-                      <p className="text-gray-400 mb-4">No products found</p>
+                    <div className="text-center py-12 sm:py-20">
+                      <p className="text-gray-400 mb-4 text-sm sm:text-base">No products found</p>
                       <button
                         onClick={() => setShowUploadForm(true)}
-                        className="px-6 py-3 bg-white text-black rounded-lg hover:bg-gray-200 transition-colors duration-300 font-semibold"
+                        className="px-4 sm:px-6 py-2 sm:py-3 bg-white text-black rounded-lg hover:bg-gray-200 transition-colors duration-300 font-semibold text-sm sm:text-base"
                       >
                         Add Your First Product
                       </button>
@@ -373,62 +429,62 @@ export default function AdminDashboard() {
               className="space-y-6"
             >
               <div>
-                <h2 className="text-3xl font-bold mb-2">Settings</h2>
-                <p className="text-gray-400">Configure your admin panel</p>
+                <h2 className="text-2xl sm:text-3xl font-bold mb-2">Settings</h2>
+                <p className="text-gray-400 text-sm sm:text-base">Configure your admin panel</p>
               </div>
               
               {/* WhatsApp Configuration */}
-              <div className="bg-gray-900 rounded-lg p-6">
-                <h3 className="text-xl font-semibold mb-4">WhatsApp Configuration</h3>
-                <p className="text-gray-400 mb-6">Configure WhatsApp number and messages for order buttons</p>
+              <div className="bg-gray-900 rounded-lg p-4 sm:p-6">
+                <h3 className="text-lg sm:text-xl font-semibold mb-4">WhatsApp Configuration</h3>
+                <p className="text-gray-400 mb-6 text-sm sm:text-base">Configure WhatsApp number and messages for order buttons</p>
                 
                 <form onSubmit={handleConfigSave} className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium mb-2">WhatsApp Number</label>
+                    <label className="block text-xs sm:text-sm font-medium mb-2">WhatsApp Number</label>
                     <input
                       type="text"
                       value={configForm.whatsappNumber}
                       onChange={(e) => setConfigForm({...configForm, whatsappNumber: e.target.value})}
                       placeholder="Enter WhatsApp number (e.g., 1234567890)"
-                      className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-white focus:border-transparent text-white"
+                      className="w-full px-3 sm:px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-white focus:border-transparent text-white text-sm sm:text-base"
                       required
                     />
                     <p className="text-xs text-gray-500 mt-1">Enter only numbers, no spaces or special characters</p>
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium mb-2">Sales Message (Order Now buttons)</label>
+                    <label className="block text-xs sm:text-sm font-medium mb-2">Sales Message (Order Now buttons)</label>
                     <textarea
                       value={configForm.salesMessage}
                       onChange={(e) => setConfigForm({...configForm, salesMessage: e.target.value})}
                       placeholder="Message for regular order buttons"
                       rows={3}
-                      className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-white focus:border-transparent text-white resize-none"
+                      className="w-full px-3 sm:px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-white focus:border-transparent text-white resize-none text-sm sm:text-base"
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium mb-2">Custom Order Message</label>
+                    <label className="block text-xs sm:text-sm font-medium mb-2">Custom Order Message</label>
                     <textarea
                       value={configForm.customOrderMessage}
                       onChange={(e) => setConfigForm({...configForm, customOrderMessage: e.target.value})}
                       placeholder="Message for custom order button"
                       rows={3}
-                      className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-white focus:border-transparent text-white resize-none"
+                      className="w-full px-3 sm:px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-white focus:border-transparent text-white resize-none text-sm sm:text-base"
                     />
                   </div>
                   
-                  <div className="flex items-center justify-between pt-4">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-4 gap-3">
                     <button
                       type="submit"
                       disabled={configSaving}
-                      className="px-6 py-2 bg-white text-black rounded-lg hover:bg-gray-200 transition-colors duration-300 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-4 sm:px-6 py-2 bg-white text-black rounded-lg hover:bg-gray-200 transition-colors duration-300 font-semibold disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base w-full sm:w-auto"
                     >
                       {configSaving ? 'Saving...' : 'Save Configuration'}
                     </button>
                     
                     {configMessage && (
-                      <p className={`text-sm ${
+                      <p className={`text-xs sm:text-sm ${
                         configMessage.includes('successfully') ? 'text-green-400' : 'text-red-400'
                       }`}>
                         {configMessage}
@@ -437,17 +493,17 @@ export default function AdminDashboard() {
                   </div>
                 </form>
                 
-                <div className="mt-6 p-4 bg-gray-800 rounded-lg">
-                  <h4 className="text-sm font-medium mb-2">Preview WhatsApp Links:</h4>
+                <div className="mt-6 p-3 sm:p-4 bg-gray-800 rounded-lg">
+                  <h4 className="text-xs sm:text-sm font-medium mb-2">Preview WhatsApp Links:</h4>
                   <div className="space-y-2 text-xs">
-                    <div>
-                      <span className="text-gray-400">Order Now: </span>
+                    <div className="break-words">
+                      <span className="text-gray-400 block sm:inline">Order Now: </span>
                       <span className="text-blue-400 break-all">
                         https://wa.me/{configForm.whatsappNumber}?text={encodeURIComponent(configForm.salesMessage)}
                       </span>
                     </div>
-                    <div>
-                      <span className="text-gray-400">Custom Order: </span>
+                    <div className="break-words">
+                      <span className="text-gray-400 block sm:inline">Custom Order: </span>
                       <span className="text-blue-400 break-all">
                         https://wa.me/{configForm.whatsappNumber}?text={encodeURIComponent(configForm.customOrderMessage)}
                       </span>
