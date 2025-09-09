@@ -1,0 +1,100 @@
+{
+  "products": [
+    {
+      "id": "mfch6sxaavvxcbn4j2t",
+      "name": "Off-Grid Retreat",
+      "title": "Off-Grid Retreat",
+      "type": "house",
+      "price": "$950,000",
+      "description": "Complete energy independence in nature",
+      "image": "/home/solarroof.jpg",
+      "specs": {
+        "bedrooms": "3 Bedrooms",
+        "bathrooms": "2 Bathrooms",
+        "sqft": "2,000 sq ft",
+        "lot": "5 acres"
+      },
+      "features": [
+        "Tesla Solar Array",
+        "Battery Storage System",
+        "Well Water",
+        "Backup Generator"
+      ],
+      "createdAt": "2025-09-09T11:36:50.158Z",
+      "updatedAt": "2025-09-09T11:36:50.158Z"
+    },
+    {
+      "id": "mfch6sz8qbg2ri1xdgs",
+      "name": "Mountain Solar Cabin",
+      "title": "Mountain Solar Cabin",
+      "type": "house",
+      "price": "$750,000",
+      "description": "Sustainable mountain living with solar power",
+      "image": "/solarpanel/solarpanel.jpg",
+      "specs": {
+        "bedrooms": "2 Bedrooms",
+        "bathrooms": "1 Bathroom",
+        "sqft": "1,500 sq ft",
+        "lot": "2 acres"
+      },
+      "features": [
+        "Tesla Solar Panels",
+        "Battery Storage System",
+        "Mountain Views",
+        "Eco-Friendly Materials"
+      ],
+      "createdAt": "2025-09-09T11:36:50.228Z",
+      "updatedAt": "2025-09-09T11:36:50.228Z"
+    },
+    {
+      "id": "mfcs8if42nvll81a1dv",
+      "specs": {
+        "range": "303 miles",
+        "wheels": "21 �berturbine",
+        "acceleration": "3.5s 0-60 mph",
+        "topSpeed": "155 mph"
+      },
+      "features": [
+        "Dual Motor All-Wheel Drive",
+        "Enhanced Autopilot",
+        "Premium Interior",
+        "Glass Roof",
+        "Supercharging Capability"
+      ],
+      "title": "Model Y Performance",
+      "name": "Model Y Performance",
+      "type": "car",
+      "price": ",190",
+      "description": "Dual Motor All-Wheel Drive with enhanced performance capabilities",
+      "image": "/modely/modely-hero-desktop.jpg",
+      "createdAt": "2025-09-09T16:46:05.632Z",
+      "updatedAt": "2025-09-09T16:46:05.633Z"
+    },
+    {
+      "id": "mfcsimg1o70s6rwe60n",
+      "name": "CYBER",
+      "title": "CYBER",
+      "type": "car",
+      "price": 78908,
+      "description": "VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV",
+      "image": "https://i.ibb.co/4RfvPPrG/tesla-cyber.jpg",
+      "specs": {
+        "range": "4445",
+        "acceleration": "3566",
+        "topSpeed": "3553",
+        "bedrooms": "",
+        "bathrooms": "",
+        "sqft": ""
+      },
+      "features": [],
+      "createdAt": "2025-09-09T16:53:57.409Z",
+      "updatedAt": "2025-09-09T16:54:29.471Z"
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "created": "2025-09-09T11:36:50.080Z",
+    "lastModified": "2025-09-09T16:54:29.471Z",
+    "totalProducts": 4
+  }
+}

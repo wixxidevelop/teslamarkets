@@ -26,6 +26,7 @@ const Navbar = ({fixed,white}) => {
                 <a href="/modely"><li className={`${style.list} cursor-pointer py-[4px] px-4`}>Model Y</li></a>
                 <a href="/solarroof"><li className={`${style.list} cursor-pointer py-[4px] px-4`}>Solar Roof</li></a>
                 <a href="/solarpanel"><li className={`${style.list} cursor-pointer py-[4px] px-4`}>Solar Panels</li></a>
+                <a href="/shop"><li className={`${style.list} cursor-pointer py-[4px] px-4`}>Shop</li></a>
             </div>
             <div className={`${style.menu} ${style.list} cursor-pointer z-100 font-medium px-3 py-[2px] rounded-[5px] lg:px-4 lg:text-sm lg:py-1 lg:font-bold`} onClick={()=>{setToggle(!Toggle)}}>Menu</div>
             <div className={`${style.sidemenu} ${Toggle ? `translate-x-[100%]` : `translate-x-0`} transition-all duration-1000 fixed w-[240px] h-screen top-0 right-0 bottom-0 lg:w-[300px]`}>
@@ -37,6 +38,7 @@ const Navbar = ({fixed,white}) => {
                     <a href="/modely"><li className={`py-[4px] font-medium cursor-pointer lg:py-[6px]`}>Model Y</li></a>
                     <a href="/solarroof"><li className={`py-[4px] font-medium cursor-pointer lg:py-[6px]`}>Solar Roof</li></a>
                     <a href="/solarpanel"><li className={`py-[4px] font-medium cursor-pointer lg:py-[6px]`}>Solar Panels</li></a>
+                    <a href="/shop"><li className={`py-[4px] font-medium cursor-pointer lg:py-[6px]`}>Shop</li></a>
                 </div>
             </div>
         </div>

@@ -10,10 +10,13 @@
   },
   "dependencies": {
     "@next/font": "13.1.1",
+    "@uploadthing/react": "^7.3.3",
+    "axios": "^1.11.0",
     "framer-motion": "^8.4.2",
     "next": "13.1.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "uploadthing": "^7.7.4"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
