@@ -11,14 +11,13 @@ import ProductUploadForm from '../../components/ProductUploadForm'
 import ProductEditForm from '../../components/ProductEditForm'
 
 export default function AdminDashboard() {
-  const { isAuthenticated, isLoading, logout } = useAdmin()
+  const { isAuthenticated, isLoading, logout, changePassword, changeUsername } = useAdmin()
   const { products, addProduct, updateProduct, deleteProduct, getProductStats } = useProducts()
   const { config, updateConfig } = useConfig()
   const router = useRouter()
   const [activeTab, setActiveTab] = useState('dashboard')
   const [showUploadForm, setShowUploadForm] = useState(false)
   const [editingProduct, setEditingProduct] = useState(null)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [stats, setStats] = useState({
     totalProducts: 0,
     totalCars: 0,
@@ -32,10 +31,23 @@ export default function AdminDashboard() {
   })
   const [configSaving, setConfigSaving] = useState(false)
   const [configMessage, setConfigMessage] = useState('')
+  const [passwordForm, setPasswordForm] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
+  })
+  const [passwordSaving, setPasswordSaving] = useState(false)
+  const [passwordMessage, setPasswordMessage] = useState('')
+  const [usernameForm, setUsernameForm] = useState({
+    currentPassword: '',
+    newUsername: ''
+  })
+  const [usernameSaving, setUsernameSaving] = useState(false)
+  const [usernameMessage, setUsernameMessage] = useState('')
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      router.push('/admin/login')
+      router.push('/secure-panel/login')
     }
   }, [isAuthenticated, isLoading, router])
 
@@ -73,6 +85,49 @@ export default function AdminDashboard() {
     setConfigSaving(false)
   }
 
+  const handlePasswordChange = async (e) => {
+    e.preventDefault()
+    setPasswordSaving(true)
+    setPasswordMessage('')
+
+    const result = changePassword(
+      passwordForm.currentPassword,
+      passwordForm.newPassword,
+      passwordForm.confirmPassword
+    )
+
+    if (result.success) {
+      setPasswordMessage(result.message)
+      setPasswordForm({ currentPassword: '', newPassword: '', confirmPassword: '' })
+    } else {
+      setPasswordMessage(result.error)
+    }
+
+    setPasswordSaving(false)
+    setTimeout(() => setPasswordMessage(''), 5000)
+  }
+
+  const handleUsernameChange = async (e) => {
+    e.preventDefault()
+    setUsernameSaving(true)
+    setUsernameMessage('')
+
+    const result = changeUsername(
+      usernameForm.newUsername,
+      usernameForm.currentPassword
+    )
+
+    if (result.success) {
+      setUsernameMessage(result.message)
+      setUsernameForm({ currentPassword: '', newUsername: '' })
+    } else {
+      setUsernameMessage(result.error)
+    }
+
+    setUsernameSaving(false)
+    setTimeout(() => setUsernameMessage(''), 5000)
+  }
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
@@ -87,7 +142,7 @@ export default function AdminDashboard() {
 
   const handleLogout = () => {
     logout()
-    router.push('/admin/login')
+    router.push('/secure-panel/login')
   }
 
   const StatCard = ({ title, value, icon, color }) => (
@@ -124,15 +179,6 @@ export default function AdminDashboard() {
       >
         <div className="flex items-center justify-between max-w-7xl mx-auto">
           <div className="flex items-center space-x-2 sm:space-x-4">
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 rounded-lg hover:bg-gray-800 transition-colors duration-300"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
-              </svg>
-            </button>
             <h1 className="text-xl sm:text-2xl font-bold">TESLA</h1>
             <span className="hidden sm:block text-gray-400">Admin Panel</span>
           </div>
@@ -154,42 +200,9 @@ export default function AdminDashboard() {
       </motion.header>
 
       <div className="flex relative">
-        {/* Mobile Sidebar Overlay */}
-        {isMobileMenuOpen && (
-          <div 
-            className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
-            onClick={() => setIsMobileMenuOpen(false)}
-          />
-        )}
-        
-        {/* Sidebar */}
-        <motion.aside 
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ 
-            opacity: 1, 
-            x: 0,
-            transform: isMobileMenuOpen ? 'translateX(0)' : 'translateX(-100%)'
-          }}
-          className={`
-            fixed lg:relative lg:translate-x-0 z-50 lg:z-auto
-            w-64 bg-gray-900 border-r border-gray-800 min-h-screen p-4 sm:p-6
-            transition-transform duration-300 ease-in-out
-            ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-          `}
-        >
-          {/* Mobile Close Button */}
-          <div className="lg:hidden flex justify-end mb-4">
-            <button
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="p-2 rounded-lg hover:bg-gray-800 transition-colors duration-300"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-          
-          <nav className="space-y-2">
+        {/* Bottom Navigation Bar */}
+        <div className="fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-800 z-50 h-[80px]">
+          <nav className="flex justify-center items-center h-full space-x-8 px-4">
             {[
               { id: 'dashboard', label: 'Dashboard', icon: '📊' },
               { id: 'products', label: 'Products', icon: '🚗' },
@@ -197,39 +210,30 @@ export default function AdminDashboard() {
             ].map((item) => (
               <button
                 key={item.id}
-                onClick={() => {
-                  setActiveTab(item.id)
-                  setIsMobileMenuOpen(false)
-                }}
-                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 ${
+                onClick={() => setActiveTab(item.id)}
+                className={`flex flex-col items-center space-y-1 px-4 py-2 rounded-lg ${
                   activeTab === item.id
                     ? 'bg-white text-black'
                     : 'text-gray-400 hover:text-white hover:bg-gray-800'
                 }`}
               >
-                <span>{item.icon}</span>
-                <span>{item.label}</span>
+                <span className="text-lg">{item.icon}</span>
+                <span className="text-xs font-medium">{item.label}</span>
               </button>
             ))}
-          </nav>
-          
-          {/* Mobile View Shop Button */}
-          <div className="lg:hidden mt-6 pt-6 border-t border-gray-800">
+            
+            {/* View Shop Button */}
             <button
-              onClick={() => {
-                router.push('/shop')
-                setIsMobileMenuOpen(false)
-              }}
-              className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-all duration-300"
+              onClick={() => router.push('/shop')}
+              className="flex flex-col items-center space-y-1 px-4 py-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800"
             >
-              <span>🛍️</span>
-              <span>View Shop</span>
+              <span className="text-lg">🛒</span>
+              <span className="text-xs font-medium">Shop</span>
             </button>
-          </div>
-        </motion.aside>
-
+          </nav>
+        </div>
         {/* Main Content */}
-        <main className="flex-1 lg:ml-0 p-4 sm:p-6 w-full lg:w-auto">
+        <main className="flex-1 p-4 sm:p-6 pb-24">
           {activeTab === 'dashboard' && (
             <motion.div 
               initial={{ opacity: 0 }}
@@ -510,6 +514,120 @@ export default function AdminDashboard() {
                     </div>
                   </div>
                 </div>
+              </div>
+
+              {/* Password Change */}
+              <div className="bg-gray-900 rounded-lg p-4 sm:p-6">
+                <h3 className="text-lg sm:text-xl font-semibold mb-4">Change Password</h3>
+                <p className="text-gray-400 mb-6 text-sm sm:text-base">Update your admin password for security</p>
+                
+                <form onSubmit={handlePasswordChange} className="space-y-4">
+                  <div>
+                    <label className="block text-xs sm:text-sm font-medium mb-2">Current Password</label>
+                    <input
+                      type="password"
+                      value={passwordForm.currentPassword}
+                      onChange={(e) => setPasswordForm({...passwordForm, currentPassword: e.target.value})}
+                      placeholder="Enter current password"
+                      className="w-full px-3 sm:px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-white focus:border-transparent text-white text-sm sm:text-base"
+                      required
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-xs sm:text-sm font-medium mb-2">New Password</label>
+                    <input
+                      type="password"
+                      value={passwordForm.newPassword}
+                      onChange={(e) => setPasswordForm({...passwordForm, newPassword: e.target.value})}
+                      placeholder="Enter new password (min 6 characters)"
+                      className="w-full px-3 sm:px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-white focus:border-transparent text-white text-sm sm:text-base"
+                      required
+                      minLength={6}
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-xs sm:text-sm font-medium mb-2">Confirm New Password</label>
+                    <input
+                      type="password"
+                      value={passwordForm.confirmPassword}
+                      onChange={(e) => setPasswordForm({...passwordForm, confirmPassword: e.target.value})}
+                      placeholder="Confirm new password"
+                      className="w-full px-3 sm:px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-white focus:border-transparent text-white text-sm sm:text-base"
+                      required
+                    />
+                  </div>
+                  
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-4 gap-3">
+                    <button
+                      type="submit"
+                      disabled={passwordSaving}
+                      className="px-4 sm:px-6 py-2 bg-white text-black rounded-lg hover:bg-gray-200 transition-colors duration-300 font-semibold disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base w-full sm:w-auto"
+                    >
+                      {passwordSaving ? 'Changing...' : 'Change Password'}
+                    </button>
+                    
+                    {passwordMessage && (
+                      <p className={`text-xs sm:text-sm ${
+                        passwordMessage.includes('successfully') ? 'text-green-400' : 'text-red-400'
+                      }`}>
+                        {passwordMessage}
+                      </p>
+                    )}
+                  </div>
+                </form>
+              </div>
+
+              {/* Username Change */}
+              <div className="bg-gray-900 rounded-lg p-4 sm:p-6">
+                <h3 className="text-lg sm:text-xl font-semibold mb-4">Change Username</h3>
+                <p className="text-gray-400 mb-6 text-sm sm:text-base">Update your admin username</p>
+                
+                <form onSubmit={handleUsernameChange} className="space-y-4">
+                  <div>
+                    <label className="block text-xs sm:text-sm font-medium mb-2">New Username</label>
+                    <input
+                      type="text"
+                      value={usernameForm.newUsername}
+                      onChange={(e) => setUsernameForm({...usernameForm, newUsername: e.target.value})}
+                      placeholder="Enter new username (min 3 characters)"
+                      className="w-full px-3 sm:px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-white focus:border-transparent text-white text-sm sm:text-base"
+                      required
+                      minLength={3}
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-xs sm:text-sm font-medium mb-2">Current Password</label>
+                    <input
+                      type="password"
+                      value={usernameForm.currentPassword}
+                      onChange={(e) => setUsernameForm({...usernameForm, currentPassword: e.target.value})}
+                      placeholder="Enter current password to confirm"
+                      className="w-full px-3 sm:px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-white focus:border-transparent text-white text-sm sm:text-base"
+                      required
+                    />
+                  </div>
+                  
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-4 gap-3">
+                    <button
+                      type="submit"
+                      disabled={usernameSaving}
+                      className="px-4 sm:px-6 py-2 bg-white text-black rounded-lg hover:bg-gray-200 transition-colors duration-300 font-semibold disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base w-full sm:w-auto"
+                    >
+                      {usernameSaving ? 'Changing...' : 'Change Username'}
+                    </button>
+                    
+                    {usernameMessage && (
+                      <p className={`text-xs sm:text-sm ${
+                        usernameMessage.includes('successfully') ? 'text-green-400' : 'text-red-400'
+                      }`}>
+                        {usernameMessage}
+                      </p>
+                    )}
+                  </div>
+                </form>
               </div>
             </motion.div>
           )}

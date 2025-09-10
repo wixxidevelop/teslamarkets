@@ -19,7 +19,7 @@ export default function AdminLogin() {
     const result = login(credentials.username, credentials.password)
     
     if (result.success) {
-      router.push('/admin')
+      router.push('/secure-panel')
     } else {
       setError(result.error)
     }
@@ -127,17 +127,7 @@ export default function AdminLogin() {
           </motion.button>
         </motion.form>
 
-        {/* Demo Credentials */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-8 p-4 bg-gray-900/50 border border-gray-800 rounded-lg"
-        >
-          <p className="text-sm text-gray-400 mb-2">Demo Credentials:</p>
-          <p className="text-sm text-gray-300">Username: <span className="font-mono">admin</span></p>
-          <p className="text-sm text-gray-300">Password: <span className="font-mono">tesla2024</span></p>
-        </motion.div>
+
 
         {/* Back to Shop */}
         <motion.div 
