@@ -73,7 +73,7 @@ const models = () => {
             <Beyond 
                 Beyondheading="Beyond Ludicrous"
                 Beyondsemiheading="Plaid"
-                Beyonddescription="Model S Plaid has the quickest acceleration of any vehicle in production. Updated battery architecture for all Model S trims enables back-to-back track runs without performance degradation. Chat with a Tesla Advisor to learn more about Model S or schedule a demo drive today."
+                Beyonddescription="Model S Plaid has the quickest acceleration of any vehicle in production. Updated battery architecture for all Model S trims enables back-to-back track runs without performance degradation. Chat with a Tesla Advisor to learn more about Model S or buy now."
                 black="false"
             />
             <Electricpowertrain 
@@ -122,14 +122,14 @@ const models = () => {
                 url="/models/models-range.mp4"
                 semiheading="Range"
                 heading="Go Anywhere"
-                description="With up to 405 miles of estimated range and access to the world’s largest and most powerful fast charging network, you’ll spend less time plugged in and more time on the road. Chat with a Tesla Advisor to learn more about Model S or schedule a demo drive today."
+                description="With up to 405 miles of estimated range and access to the world's largest and most powerful fast charging network, you'll spend less time plugged in and more time on the road. Chat with a Tesla Advisor to learn more about Model S or buy now."
                 video="true"
                 reverse="false"
             />
             <Beyond 
                 Beyondheading="Future of Driving"
                 Beyondsemiheading="Autopilot"
-                Beyonddescription="Autopilot enables your car to steer, accelerate and brake automatically within its lane under your active supervision, assisting with the most burdensome parts of driving. With over-the-air software updates, the latest enhancements are available instantly. Chat with a Tesla Advisor to learn more about Model S or schedule a demo drive today."
+                Beyonddescription="Autopilot enables your car to steer, accelerate and brake automatically within its lane under your active supervision, assisting with the most burdensome parts of driving. With over-the-air software updates, the latest enhancements are available instantly. Chat with a Tesla Advisor to learn more about Model S or buy now."
                 black="false"
             />
             <Features 

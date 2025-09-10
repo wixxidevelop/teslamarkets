@@ -26,7 +26,7 @@ export default function AdminDashboard() {
     totalValue: 0
   })
   const [configForm, setConfigForm] = useState({
-    whatsappNumber: '',
+    emailAddress: '',
     salesMessage: '',
     customOrderMessage: ''
   })
@@ -49,7 +49,7 @@ export default function AdminDashboard() {
     // Populate config form when config is loaded
     if (config) {
       setConfigForm({
-        whatsappNumber: config.whatsappNumber || '',
+        emailAddress: config.emailAddress || '',
         salesMessage: config.salesMessage || '',
         customOrderMessage: config.customOrderMessage || ''
       })
@@ -433,23 +433,23 @@ export default function AdminDashboard() {
                 <p className="text-gray-400 text-sm sm:text-base">Configure your admin panel</p>
               </div>
               
-              {/* WhatsApp Configuration */}
+              {/* Email Configuration */}
               <div className="bg-gray-900 rounded-lg p-4 sm:p-6">
-                <h3 className="text-lg sm:text-xl font-semibold mb-4">WhatsApp Configuration</h3>
-                <p className="text-gray-400 mb-6 text-sm sm:text-base">Configure WhatsApp number and messages for order buttons</p>
+                <h3 className="text-lg sm:text-xl font-semibold mb-4">Email Configuration</h3>
+                <p className="text-gray-400 mb-6 text-sm sm:text-base">Configure email address and messages for order buttons</p>
                 
                 <form onSubmit={handleConfigSave} className="space-y-4">
                   <div>
-                    <label className="block text-xs sm:text-sm font-medium mb-2">WhatsApp Number</label>
+                    <label className="block text-xs sm:text-sm font-medium mb-2">Email Address</label>
                     <input
-                      type="text"
-                      value={configForm.whatsappNumber}
-                      onChange={(e) => setConfigForm({...configForm, whatsappNumber: e.target.value})}
-                      placeholder="Enter WhatsApp number (e.g., 1234567890)"
+                      type="email"
+                      value={configForm.emailAddress}
+                      onChange={(e) => setConfigForm({...configForm, emailAddress: e.target.value})}
+                      placeholder="Enter email address (e.g., orders@company.com)"
                       className="w-full px-3 sm:px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-white focus:border-transparent text-white text-sm sm:text-base"
                       required
                     />
-                    <p className="text-xs text-gray-500 mt-1">Enter only numbers, no spaces or special characters</p>
+                    <p className="text-xs text-gray-500 mt-1">Enter a valid email address for receiving orders</p>
                   </div>
                   
                   <div>
@@ -494,18 +494,18 @@ export default function AdminDashboard() {
                 </form>
                 
                 <div className="mt-6 p-3 sm:p-4 bg-gray-800 rounded-lg">
-                  <h4 className="text-xs sm:text-sm font-medium mb-2">Preview WhatsApp Links:</h4>
+                  <h4 className="text-xs sm:text-sm font-medium mb-2">Preview Email Links:</h4>
                   <div className="space-y-2 text-xs">
                     <div className="break-words">
                       <span className="text-gray-400 block sm:inline">Order Now: </span>
                       <span className="text-blue-400 break-all">
-                        https://wa.me/{configForm.whatsappNumber}?text={encodeURIComponent(configForm.salesMessage)}
+                        mailto:{configForm.emailAddress}?subject=Order%20Request&body={encodeURIComponent(configForm.salesMessage)}
                       </span>
                     </div>
                     <div className="break-words">
                       <span className="text-gray-400 block sm:inline">Custom Order: </span>
                       <span className="text-blue-400 break-all">
-                        https://wa.me/{configForm.whatsappNumber}?text={encodeURIComponent(configForm.customOrderMessage)}
+                        mailto:{configForm.emailAddress}?subject=Custom%20Order%20Request&body={encodeURIComponent(configForm.customOrderMessage)}
                       </span>
                     </div>
                   </div>

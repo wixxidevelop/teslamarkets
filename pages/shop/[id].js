@@ -4,11 +4,13 @@ import { useState, useEffect } from 'react';
 import Navbar from "../../components/Navbarbanner";
 import Link from 'next/link';
 import { useProducts } from '../../contexts/ProductContext';
+import { useConfig } from '../../contexts/ConfigContext';
 
 export default function ProductDetail() {
     const router = useRouter();
     const { id } = router.query;
     const { products, loading: productsLoading, getProductById } = useProducts();
+    const { getEmailUrl } = useConfig();
     const [item, setItem] = useState(null);
     const [imageError, setImageError] = useState(false);
     const [selectedImage, setSelectedImage] = useState(0);
@@ -139,32 +141,12 @@ export default function ProductDetail() {
                             </div>
 
                             {/* Action Buttons */}
-                            <div className="space-y-4">
-                                <button className="w-full bg-black text-white py-4 px-6 rounded-full text-lg font-medium hover:bg-gray-800 transition-colors duration-300">
-                                    {item.type === 'car' ? 'Configure & Order' : 'Schedule Viewing'}
-                                </button>
-                                <button className="w-full border-2 border-gray-300 text-gray-700 py-4 px-6 rounded-full text-lg font-medium hover:bg-gray-50 transition-colors duration-300">
-                                    {item.type === 'car' ? 'Schedule Test Drive' : 'Request Information'}
-                                </button>
-                            </div>
-
-                            {/* Additional Info */}
-                            <div className="bg-blue-50 rounded-lg p-4">
-                                <div className="flex items-start space-x-3">
-                                    <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                                        <span className="text-white text-sm font-bold">i</span>
-                                    </div>
-                                    <div>
-                                        <h4 className="font-medium text-blue-900 mb-1">
-                                            {item.type === 'car' ? 'Financing Available' : 'Energy Solutions Included'}
-                                        </h4>
-                                        <p className="text-blue-700 text-sm">
-                                            {item.type === 'car' 
-                                                ? 'Explore financing options and trade-in value for your current vehicle.'
-                                                : 'Complete solar energy system with Tesla Powerwall battery storage.'}
-                                        </p>
-                                    </div>
-                                </div>
+                            <div className="space-y-6">
+                                <a href={getEmailUrl(false)} target="_blank" rel="noopener noreferrer">
+                                    <button className="w-full bg-black text-white py-4 px-6 rounded-full text-lg font-medium hover:bg-gray-800 transition-colors duration-300">
+                                        Buy Now
+                                    </button>
+                                </a>
                             </div>
                         </div>
                     </div>

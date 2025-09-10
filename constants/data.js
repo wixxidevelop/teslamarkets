@@ -4,7 +4,7 @@ export const Bannerinfos = [
         title:"Model Y",
         urlDesktop:"/home/model-y.jpg",
         urlMobile:"/home/model-y-mobile.jpg",
-        description:"Schedule a Demo Drive",
+        description:"Buy Now",
         underline:true
     },
     {
@@ -12,7 +12,7 @@ export const Bannerinfos = [
         title:"Model 3",
         urlDesktop:"/home/model-3.jpg",
         urlMobile:"/home/model-3-mobile.jpg",
-        description:"Schedule a Demo Drive",
+        description:"Buy Now",
         underline:true
     },
     {
@@ -20,7 +20,7 @@ export const Bannerinfos = [
         title:"Model S",
         urlDesktop:"/home/model-s.jpg",
         urlMobile:"/home/model-s-mobile.jpg",
-        description:"Schedule a Demo Drive",
+        description:"Buy Now",
         underline:true
     },
     {
@@ -28,7 +28,7 @@ export const Bannerinfos = [
         title:"Model X",
         urlDesktop:"/home/model-x.jpg",
         urlMobile:"/home/model-x-mobile.jpg",
-        description:"Schedule a Demo Drive",
+        description:"Buy Now",
         underline:true
     },
     {

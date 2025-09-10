@@ -18,7 +18,7 @@ const model3 = () => {
                 title="Model 3"
                 urlDesktop="/model3/model-3.jpg"
                 urlMobile="/model3/model-3-mobile.jpg"
-                description="Schedule a Demo Drive" 
+                description="Buy Now" 
                 infoheading1="358 mi"
                 infodescription1="Range (EPA est.)"
                 infoheading2="3.1 s"
@@ -32,7 +32,7 @@ const model3 = () => {
             <Beyond 
                 Beyondheading="Quickest Acceleration"
                 Beyondsemiheading="Performance"
-                Beyonddescription="Model 3 comes with the option of dual motor all-wheel drive, 20” Überturbine Wheels and Performance Brakes for total control in all weather conditions. A carbon fiber spoiler improves stability at high speeds, all allowing Model 3 to accelerate from 0-60 mph* in as little as 3.1 seconds. Chat with a Tesla Advisor to learn more about Model 3 or schedule a demo drive today."
+                Beyonddescription="Model 3 comes with the option of dual motor all-wheel drive, 20” Überturbine Wheels and Performance Brakes for total control in all weather conditions. A carbon fiber spoiler improves stability at high speeds, all allowing Model 3 to accelerate from 0-60 mph* in as little as 3.1 seconds. Chat with a Tesla Advisor to learn more about Model 3 or buy now."
                 black="false"
             />
             <Carinfobanner 
@@ -70,7 +70,7 @@ const model3 = () => {
             <Beyond 
                 Beyondheading="Future of Driving"
                 Beyondsemiheading="Autopilot"
-                Beyonddescription="Autopilot's advanced safety and convenience features are designed to assist you with the most burdensome parts of driving. Chat with a Tesla Advisor to learn more about Model 3 or schedule a demo drive today."
+                Beyonddescription="Autopilot's advanced safety and convenience features are designed to assist you with the most burdensome parts of driving. Chat with a Tesla Advisor to learn more about Model 3 or buy now."
                 black="false"
             />
             <Carinfobanner 

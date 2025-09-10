@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export const Banner = ({title,urlDesktop,urlMobile,description,underline}) => {
     const size = useWindowSize();
-    const { getWhatsAppUrl } = useConfig();
+    const { getEmailUrl } = useConfig();
     return (
         <motion.div className={`${style.banner} relative overflow-hidden`}variants={staggerContainer}
         initial="hidden"
@@ -19,7 +19,7 @@ export const Banner = ({title,urlDesktop,urlMobile,description,underline}) => {
                 <motion.p variants={textVariant(1.4)} className={`${underline ? `${style.demo}` : ""} text-xs lg:text-sm`}>{description}</motion.p>
             </div>
             <div className={`${style.bannerbutton} absolute top-[80%] left-[50%] flex flex-col md:flex-row`}>
-                <a href={getWhatsAppUrl(true)} target="_blank" rel="noopener noreferrer">
+                <a href={getEmailUrl(true)} target="_blank" rel="noopener noreferrer">
                     <motion.button variants={buttonVariant(1.8)} className={`${style.herobutton1} my-2 mx-4 w-[240px] rounded-[5px] py-2 px-2 text-white lg:w-[340px] cursor-pointer hover:opacity-90 transition-opacity`}>Custom Order</motion.button>
                 </a>
                 <Link href="/shop">

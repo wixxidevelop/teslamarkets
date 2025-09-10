@@ -19,7 +19,7 @@ const modelY = () => {
                 title="Model Y"
                 urlDesktop="/modely/model-y.jpg"
                 urlMobile="/modely/model-y-mobile.jpg"
-                description="Schedule a Demo Drive" 
+                description="Buy Now" 
                 infoheading1="330 mi"
                 infodescription1="Range (EPA est.)"
                 infoheading2="76 cu ft"
@@ -41,7 +41,7 @@ const modelY = () => {
             <Beyond 
                 Beyondheading="A Place For Everything"
                 Beyondsemiheading="Utility"
-                Beyonddescription="Model Y provides maximum versatility—able to carry 7 passengers and their cargo. Each second row seat folds flat independently, creating flexible storage for skis, furniture, luggage and more. The liftgate opens to a low trunk floor that makes loading and unloading easy and quick. Chat with a Tesla Advisor to learn more about Model Y or schedule a demo drive today."
+                Beyonddescription="Model Y provides maximum versatility—able to carry 7 passengers and their cargo. Each second row seat folds flat independently, creating flexible storage for skis, furniture, luggage and more. The liftgate opens to a low trunk floor that makes loading and unloading easy and quick. Chat with a Tesla Advisor to learn more about Model Y or buy now."
                 black="false"
             />
             <Image />

@@ -72,7 +72,7 @@ const modelX = () => {
             <Beyond 
                 Beyondheading="Beyond Ludicrous"
                 Beyondsemiheading="Plaid"
-                Beyonddescription="With the most power and quickest acceleration of any SUV, Model X Plaid is the highest performing SUV ever built. Updated battery architecture enables both Long Range and Plaid configurations to complete back-to-back track runs without performance degradation. Chat with a Tesla Advisor to learn more about Model X or schedule a demo drive today."
+                Beyonddescription="With the most power and quickest acceleration of any SUV, Model X Plaid is the highest performing SUV ever built. Updated battery architecture enables both Long Range and Plaid configurations to complete back-to-back track runs without performance degradation. Chat with a Tesla Advisor to learn more about Model X or buy now."
                 black="false"
             />
             <Electricpowertrain 
@@ -129,14 +129,14 @@ const modelX = () => {
                 url="/modelx/go-anywhere.jpg"
                 semiheading="Range"
                 heading="Go Anywhere"
-                description="With up to 348 miles of estimated range and access to the world’s largest and most powerful fast charging network, you’ll spend less time plugged in and more time on the road. Chat with a Tesla Advisor to learn more about Model X or schedule a demo drive today."
+                description="With up to 348 miles of estimated range and access to the world's largest and most powerful fast charging network, you'll spend less time plugged in and more time on the road. Chat with a Tesla Advisor to learn more about Model X or buy now."
                 video="false"
                 reverse="false"
             />
             <Beyond 
                 Beyondheading="Future of Driving"
                 Beyondsemiheading="Autopilot"
-                Beyonddescription="Autopilot enables your car to steer, accelerate and brake automatically within its lane under your active supervision, assisting with the most burdensome parts of driving. With over-the-air software updates, the latest enhancements are available instantly. Chat with a Tesla Advisor to learn more about Model X or schedule a demo drive today."
+                Beyonddescription="Autopilot enables your car to steer, accelerate and brake automatically within its lane under your active supervision, assisting with the most burdensome parts of driving. With over-the-air software updates, the latest enhancements are available instantly. Chat with a Tesla Advisor to learn more about Model X or buy now."
                 black="false"
             />
             <Features 

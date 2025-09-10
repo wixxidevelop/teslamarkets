@@ -7,7 +7,7 @@ import { useConfig } from "../contexts/ConfigContext";
 
 export const Banner = ({title,urlDesktop,urlMobile,description,infoheading1,infodescription1,infoheading2,infodescription2,infoheading3,infodescription3,infoheading4,infodescription4,white}) => {
     const { width } = useWindowSize()
-    const { getWhatsAppUrl } = useConfig()
+    const { getEmailUrl } = useConfig()
     return (
         <div className="relative md:h-screen lg:h-auto">
             <Navbar white={white}/>
@@ -43,7 +43,7 @@ export const Banner = ({title,urlDesktop,urlMobile,description,infoheading1,info
                             <p className="text-center text-[8px] hidden md:text-[8px] md:block lg:text-xs">{infodescription4}</p>
                         </motion.div>
                     </div>
-                    <a href={getWhatsAppUrl(false)} target="_blank" rel="noopener noreferrer">
+                    <a href={getEmailUrl(false)} target="_blank" rel="noopener noreferrer">
                         <motion.button variants={textVariant(1.8)} className="mr-14 w-[220px] text-[18px] font-medium border-2 px-4 py-1 rounded-[5px] sm:mb-10 lg:w-[240px] lg:mr-10 hover:bg-white hover:text-black hover:duration-700 cursor-pointer">order now</motion.button>
                     </a>
                 </motion.div>

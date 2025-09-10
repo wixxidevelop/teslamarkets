@@ -3,7 +3,7 @@ import { textVariant } from "../constants/motion";
 import { useConfig } from "../contexts/ConfigContext";
 
 const Infovideo = ({url,semiheading,heading,description,video,reverse,FMR}) => {
-    const { getWhatsAppUrl } = useConfig();
+    const { getEmailUrl } = useConfig();
     return (
         <div className={`flex bg-white flex-col ${reverse === "true" ? "lg:flex-row-reverse" : "lg:flex-row"}`}>
             <div className="relative">
@@ -20,7 +20,7 @@ const Infovideo = ({url,semiheading,heading,description,video,reverse,FMR}) => {
                     <p className="text-sm overflow-hidden">{description}</p>
                 </motion.div>
                 <motion.div variants={textVariant(1.4)} className="md:mx-2">
-                    <a href={getWhatsAppUrl(false)} target="_blank" rel="noopener noreferrer">
+                    <a href={getEmailUrl(false)} target="_blank" rel="noopener noreferrer">
                         <button className={`mr-14 overflow-hidden w-[220px] text-[18px] font-medium border-2 mt-4 px-4 py-1 rounded-[5px] hover:bg-black border-black hover:text-white sm:mb-2 md:w-[340px] lg:mr-10  hover:duration-700 cursor-pointer`}>order now</button>
                     </a>
                     {FMR === "false" ? "" : <button className={`mr-14 overflow-hidden w-[220px] text-[18px] bg-[#f4f4f4] font-normal my-4  px-4 py-1 rounded-[5px] sm:mb-6 md:w-[340px] lg:mr-10  hover:duration-700`}>Find My Route</button>}

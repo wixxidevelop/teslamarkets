@@ -11,7 +11,7 @@ function readConfig() {
   } catch (error) {
     // Return default config if file doesn't exist
     return {
-      whatsappNumber: '1234567890',
+      emailAddress: 'orders@teslamarkets.com',
       salesMessage: "Hi, I'm interested in placing an order for a Tesla. Could you please help me with the details?",
       customOrderMessage: "Hi, I'm interested in placing a custom order for a Tesla. Could you please help me with the details?"
     }
@@ -33,15 +33,21 @@ export default function handler(req, res) {
     }
   } else if (req.method === 'POST') {
     try {
-      const { whatsappNumber, salesMessage, customOrderMessage } = req.body
+      const { emailAddress, salesMessage, customOrderMessage } = req.body
       
       // Validate required fields
-      if (!whatsappNumber) {
-        return res.status(400).json({ error: 'WhatsApp number is required' })
+      if (!emailAddress) {
+        return res.status(400).json({ error: 'Email address is required' })
+      }
+      
+      // Basic email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (!emailRegex.test(emailAddress)) {
+        return res.status(400).json({ error: 'Please provide a valid email address' })
       }
       
       const config = {
-        whatsappNumber: whatsappNumber.replace(/[^0-9]/g, ''), // Remove non-numeric characters
+        emailAddress: emailAddress.trim().toLowerCase(),
         salesMessage: salesMessage || "Hi, I'm interested in placing an order for a Tesla. Could you please help me with the details?",
         customOrderMessage: customOrderMessage || "Hi, I'm interested in placing a custom order for a Tesla. Could you please help me with the details?"
       }

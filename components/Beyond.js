@@ -3,7 +3,7 @@ import { textVariant } from "../constants/motion";
 import { useConfig } from "../contexts/ConfigContext";
 
 const Beyond = ({Beyondheading,Beyondsemiheading,Beyonddescription,black}) => {
-    const { getWhatsAppUrl } = useConfig();
+    const { getEmailUrl } = useConfig();
     return (
         <motion.div 
             className={`${black === "true" ? "bg-black text-white" : "bg-white text-black"} overflow-hidden`}
@@ -21,7 +21,7 @@ const Beyond = ({Beyondheading,Beyondsemiheading,Beyonddescription,black}) => {
                         <p className="text-sm overflow-hidden">{Beyonddescription}</p>
                     </motion.div>
                 </div>
-                <a href={getWhatsAppUrl(false)} target="_blank" rel="noopener noreferrer">
+                <a href={getEmailUrl(false)} target="_blank" rel="noopener noreferrer">
                     <motion.button variants={textVariant(1.3)} className={`mr-14 overflow-hidden w-[220px] text-[18px] font-medium mx-4 border-2  px-4 py-1 rounded-[5px] ${black === "true" ? "hover:bg-white border-white hover:text-black" : "hover:bg-black border-black hover:text-white"} sm:mb-10 lg:w-[240px] lg:mr-10  hover:duration-700 cursor-pointer`}>order now</motion.button>
                 </a>
             </div>

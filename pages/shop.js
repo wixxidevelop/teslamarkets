@@ -3,9 +3,11 @@ import { useState, useEffect } from 'react'
 import Navbar from '../components/Navbarbanner'
 import ShopCard from '../components/ShopCard'
 import { useProducts } from '../contexts/ProductContext'
+import { useConfig } from '../contexts/ConfigContext'
 
 export default function Shop() {
     const { products, loading } = useProducts()
+    const { getEmailUrl } = useConfig()
     const [filter, setFilter] = useState('all')
     const [filteredProducts, setFilteredProducts] = useState([])
     const [searchTerm, setSearchTerm] = useState('')
@@ -191,30 +193,15 @@ export default function Shop() {
             </div>
             
             <div className="flex flex-col sm:flex-row gap-3 justify-center mb-8">
-              <button className="px-6 py-3 bg-gray-900 text-white rounded-lg font-semibold hover:bg-gray-800 transition-colors">
-                Schedule Test Drive
-              </button>
-              <button className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-colors">
-                Learn More
-              </button>
+              <a href={getEmailUrl(false)} target="_blank" rel="noopener noreferrer">
+                <button className="px-6 py-3 bg-gray-900 text-white rounded-lg font-semibold hover:bg-gray-800 transition-colors">
+                  Buy Now
+                </button>
+              </a>
             </div>
             
             <div className="border-t border-gray-200 pt-6">
-              <div className="flex flex-col sm:flex-row justify-between items-center gap-6">
-                <div className="flex items-center gap-8">
-                  <div className="text-center">
-                    <div className="text-xl font-bold text-gray-900">500K+</div>
-                    <div className="text-sm text-gray-600">Vehicles Delivered</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-xl font-bold text-gray-900">40+</div>
-                    <div className="text-sm text-gray-600">Countries</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-xl font-bold text-gray-900">99%</div>
-                    <div className="text-sm text-gray-600">Satisfaction</div>
-                  </div>
-                </div>
+              <div className="text-center">
                 <div className="text-sm text-gray-500">
                   © 2024 Tesla Clone. All rights reserved.
                 </div>

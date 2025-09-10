@@ -4,7 +4,7 @@ const ConfigContext = createContext()
 
 export function ConfigProvider({ children }) {
   const [config, setConfig] = useState({
-    whatsappNumber: '1234567890',
+    emailAddress: 'orders@teslamarkets.com',
     salesMessage: "Hi, I'm interested in placing an order for a Tesla. Could you please help me with the details?",
     customOrderMessage: "Hi, I'm interested in placing a custom order for a Tesla. Could you please help me with the details?"
   })
@@ -53,16 +53,17 @@ export function ConfigProvider({ children }) {
     }
   }
 
-  const getWhatsAppUrl = (isCustomOrder = false) => {
+  const getEmailUrl = (isCustomOrder = false) => {
     const message = isCustomOrder ? config.customOrderMessage : config.salesMessage
-    return `https://wa.me/${config.whatsappNumber}?text=${encodeURIComponent(message)}`
+    const subject = isCustomOrder ? 'Custom Order Request' : 'Order Request'
+    return `mailto:${config.emailAddress}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`
   }
 
   const value = {
     config,
     loading,
     updateConfig,
-    getWhatsAppUrl,
+    getEmailUrl,
     fetchConfig
   }
 
